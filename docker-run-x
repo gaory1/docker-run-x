@@ -1,0 +1,39 @@
+#!/bin/bash
+
+if test $# == 0; then
+    echo "Examples: "
+    echo -e "\tdocker-run-x.sh -v /tmp/home:\$HOME firefox"
+    echo -e "\tdocker-run-x.sh -v \$HOME:\$HOME vlc"
+    echo -e "\tdocker-run-x.sh firefox"
+    echo 
+    echo "Tips:"
+    echo "1. Many applications need to access \$HOME, better get it mapped to a fake or the real home"
+    echo "2. Add --ipc=host for better display performance but less isolated"
+    echo
+    echo "For information about arguments, refer to 'docker run'"
+    exit 1
+fi
+
+opts="--env=QT_X11_NO_MITSHM=1"
+for i in $@; do 
+    if test "${i:0:5}" == --ipc; then
+        opts=
+    fi
+done
+
+if test -e /dev/dri; then
+    opts="$opts --device=/dev/dri"
+fi
+
+exec docker run -ti \
+    --env="DISPLAY" \
+    --device=/dev/snd \
+    --volume="/etc/group:/etc/group:ro" \
+    --volume="/etc/passwd:/etc/passwd:ro" \
+    --volume="/etc/shadow:/etc/shadow:ro" \
+    --volume="/etc/sudoers.d:/etc/sudoers.d:ro" \
+    --volume="/tmp/.X11-unix:/tmp/.X11-unix:ro" \
+    --user=$(id -u):$(id -g) \
+    $opts \
+    $@
+
