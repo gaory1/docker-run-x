@@ -2,9 +2,9 @@
 
 if test $# == 0; then
     echo "Examples: "
-    echo -e "\tdocker-run-x.sh -v /tmp/home:\$HOME firefox"
-    echo -e "\tdocker-run-x.sh -v \$HOME:\$HOME vlc"
-    echo -e "\tdocker-run-x.sh firefox"
+    echo -e "\tdocker-run-x -v /tmp/home:\$HOME firefox"
+    echo -e "\tdocker-run-x -v \$HOME:\$HOME vlc"
+    echo -e "\tdocker-run-x firefox"
     echo 
     echo "Tips:"
     echo "1. Many applications need to access \$HOME, better get it mapped to a fake or the real home"
