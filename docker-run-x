@@ -32,6 +32,7 @@ exec docker run -ti \
     --volume="/etc/passwd:/etc/passwd:ro" \
     --volume="/etc/shadow:/etc/shadow:ro" \
     --volume="/etc/sudoers.d:/etc/sudoers.d:ro" \
+    --volume="/etc/localtime:/etc/localtime:ro" \
     --volume="/tmp/.X11-unix:/tmp/.X11-unix:ro" \
     --user=$(id -u):$(id -g) \
     $opts \
